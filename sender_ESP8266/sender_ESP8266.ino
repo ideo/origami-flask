@@ -9,6 +9,7 @@
 /***** WIFI stuff *****/
 char ssid[] = "******************";   // your network SSID (name)
 char pass[] = "******************";   // your network password
+String serverIp = "http://192.168.*.*:5000/api/request-screen"; //server IP + API endpoint
 WiFiEventHandler gotIpEventHandler, disconnectedEventHandler;
 boolean connected = false;            //Are we currently connected?
 
@@ -21,9 +22,9 @@ int prev_arrow[arrowNum];
 StaticJsonDocument<200> jsonContent;
 
 void setup() {
-  
+
   Serial.begin(115200);
-  
+
   pinMode(5, INPUT_PULLUP); //D1, arrow FRONT
   pinMode(4, INPUT_PULLUP); //D2, arrow RIGHT
   pinMode(0, INPUT_PULLUP); //D3, arrow LEFT
@@ -47,7 +48,7 @@ void loop() {
     arrow[1] = digitalRead(4);
     arrow[2] = digitalRead(0);
     arrow[3] = digitalRead(2);
-  
+
     for (int i = 0; i < arrowNum; i++) {
       //when joystick is pushed
       if (arrow[i] == LOW && prev_arrow[i] != LOW) {
@@ -58,7 +59,7 @@ void loop() {
         //send POST request to local server
         HTTPClient http;
         String jsonString;
-        http.begin("http://192.168.0.9:5000/api/request-screen");  //Specify server IP + API endpoint
+        http.begin(serverIp);  //Specify server IP + API endpoint
         http.addHeader("Content-Type", "application/json");         //Specify content-type header
         switch (i) {
           case 0:
@@ -77,13 +78,13 @@ void loop() {
         serializeJsonPretty(jsonContent, Serial); //print JSON content to Serial
         serializeJson(jsonContent, jsonString);   // Serialize JSON document
         int httpCode = http.POST(jsonString);     //Send the request
-        String payload = http.getString();        //Get the response payload    
+        String payload = http.getString();        //Get the response payload
         Serial.println(httpCode);                 //Print HTTP return code
         Serial.println(payload);                  //Print request response payload
         http.end();                               //Close connection
         jsonContent.clear();                      //reset json content
       }
-      
+
       //when joystick is released
       if (arrow[i] == HIGH && prev_arrow[i] != HIGH) {
         Serial.print(i + 1);
@@ -91,10 +92,10 @@ void loop() {
         prev_arrow[i] = HIGH;
       }
     }
-    
+
     delay(10);
   }
-  
+
 }
 
 void connectToWiFi(){
@@ -114,7 +115,7 @@ void connectToWiFi(){
     connected = false;
     digitalWrite(16, LOW);//turn white LED on
   });
-  
+
   // Connect to WiFi network
   Serial.print("Connecting to ");
   Serial.println(ssid);
