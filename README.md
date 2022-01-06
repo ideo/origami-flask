@@ -26,6 +26,6 @@ Look at [this deck](https://docs.google.com/presentation/d/1RW_LN8S06jPru6YspLcx
 
 1. Go to `03_origami-Airtable` directory
 2. Open `receiver_Airtable.origami` and `sender_Airtable.origami`
-3. Go to [this Airtable base](https://airtable.com/invite/l?inviteId=invB2MpLJFJghds7J&inviteToken=f15dfb057ea615b5c924aa2e88c90414992e4a7c4a4cde56872568970c8c50f4) (only allows IDEO email address)
+3. Go to [this Airtable base](https://airtable.com/invite/l?inviteId=invmnKvhMrhVAqE4Q&inviteToken=08895cbdb2b5f238c943c41ccbe6a7f1ce379e656913814735a68bd5e84972ea&utm_source=email) (only allows IDEO email address)
 4. `receiver_Airtable.origami` will load the `my-data` table on load, and `sender_Airtable.origami` will add a new record. Currently the photo attachment is just a non-working dummy, but technically you can take a photo with Origami, upload it to an external server then pass that URL to Airtable and it will work.
 5. See the [Airtable API Reference for this base](https://airtable.com/appF7iNDb2CFyyRpO/api/docs#curl/introduction) for more detailed info on the API (yes, Airtable's API is very generously documented.)
